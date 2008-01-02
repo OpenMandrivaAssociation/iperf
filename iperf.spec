@@ -10,6 +10,7 @@ License: BSD style
 Group:     Networking/Other
 Source:    %{name}-%{version}.tar.bz2
 URL:       http://dast.nlanr.net/Projects/Iperf/
+BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-root
 
 %description
 Iperf is a network performance measurement tool.
