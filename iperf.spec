@@ -1,6 +1,6 @@
 %define    version	2.0.2
 %define    name		iperf
-%define    release	%mkrel 1
+%define    release	%mkrel 3
 
 Summary:   Network performance measurement tool
 Name:      %name
