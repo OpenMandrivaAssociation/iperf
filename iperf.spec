@@ -1,16 +1,12 @@
-%define    version	2.0.2
-%define    name		iperf
-%define    release	%mkrel 3
-
-Summary:   Network performance measurement tool
-Name:      %name
-Version:   %version
-Release:   %release
-License: BSD style
-Group:     Networking/Other
-Source:    %{name}-%{version}.tar.bz2
-URL:       http://dast.nlanr.net/Projects/Iperf/
-BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-root
+Summary:	Network performance measurement tool
+Name:		iperf
+Version:	2.0.4
+Release:	%mkrel 1
+License:	BSD
+Group:		Networking/Other
+URL:		http://dast.nlanr.net/Projects/Iperf/
+Source0:	http://downloads.sourceforge.net/iperf/%{name}-%{version}.tar.bz2
+BuildRoot:	%{_tmppath}/%{name}-%{version}-%{release}-buildroot
 
 %description
 Iperf is a network performance measurement tool.
@@ -25,24 +21,22 @@ the tuning of various parameters and UDP characteristics.
 Iperf reports bandwidth, delay jitter, datagram loss. 
 
 %prep
-
-%setup
+%setup -q
 
 %build
-%configure
-make
+%configure2_5x
+%make
 
 %install
-cd src
-mkdir -p $RPM_BUILD_ROOT/%{_bindir}
-make INSTALL_DIR=$RPM_BUILD_ROOT/%{_bindir} bindir=$RPM_BUILD_ROOT/%{_bindir} install 
+rm -rf %{buildroot}
+%makeinstall_std
 
 %clean
-rm -rf $RPM_BUILD_ROOT
+rm -rf %{buildroot}
 
 %files
-%defattr(-, root, root)
+%defattr(-,root,root)
 %doc README
 %doc doc/*
 %{_bindir}/iperf
-
+%{_mandir}/man1/*
