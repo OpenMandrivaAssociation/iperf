@@ -1,7 +1,7 @@
 Summary:	Network performance measurement tool
 Name:		iperf
 Version:	2.0.4
-Release:	%mkrel 1
+Release:	%mkrel 2
 License:	BSD
 Group:		Networking/Other
 URL:		http://dast.nlanr.net/Projects/Iperf/
