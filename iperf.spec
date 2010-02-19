@@ -6,6 +6,7 @@ License:	BSD
 Group:		Networking/Other
 URL:		http://dast.nlanr.net/Projects/Iperf/
 Source0:	http://downloads.sourceforge.net/iperf/%{name}-%{version}.tar.bz2
+Patch0:		iperf-2.0.4-fix-str-fmt.patch
 BuildRoot:	%{_tmppath}/%{name}-%{version}-%{release}-buildroot
 
 %description
@@ -22,6 +23,7 @@ Iperf reports bandwidth, delay jitter, datagram loss.
 
 %prep
 %setup -q
+%patch0 -p0
 
 %build
 %configure2_5x
