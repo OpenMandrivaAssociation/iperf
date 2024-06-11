@@ -1,91 +1,66 @@
-Summary:	Network performance measurement tool
-Name:		iperf
-Version:	2.0.5
-Release:	2
-License:	BSD
-Group:		Networking/Other
-URL:		http://dast.nlanr.net/Projects/Iperf/
-Source0:	http://downloads.sourceforge.net/iperf/%{name}-%{version}.tar.gz
-Patch0:         iperf-2.0.5-fix-str-fmt.patch
-BuildRoot:	%{_tmppath}/%{name}-%{version}-%{release}-buildroot
+%define major     0
+%define libname   %mklibname iperf %major
+%define develname %mklibname iperf -d
+
+Name:    iperf
+Version: 3.17.1
+Release: 1
+License: BSD
+Group:   Networking/Other
+Summary: A TCP, UDP, and SCTP network bandwidth measurement tool
+URL:     https://github.com/esnet/iperf
+Source:  https://github.com/esnet/%{name}/archive/%{version}.tar.gz
+
+BuildRequires: pkgconfig(libcrypto)
+BuildRequires: pkgconfig(libssl)
 
 %description
-Iperf is a network performance measurement tool.
+iperf is a tool for active measurements of the maximum achievable bandwidth
+on IP networks. It supports tuning of various parameters related to timing,
+protocols, and buffers. For each test it reports the bandwidth, loss, and
+other parameters.
 
-While tools to measure network performance, such as ttcp, exist, 
-most are very old and have confusing options. 
-Iperf was developed as a modern alternative for measuring TCP and UDP 
-bandwidth performance.
+%package -n %{libname}
+Group:    System/Libraries
+Summary:  Libraries for %{name}
+Requires: %{name} >= %{version}-%{release}
 
-Iperf is a tool to measure maximum TCP bandwidth, allowing 
-the tuning of various parameters and UDP characteristics. 
-Iperf reports bandwidth, delay jitter, datagram loss. 
+%description -n %{libname}
+iperf is a tool for active measurements of the maximum achievable bandwidth
+on IP networks. It supports tuning of various parameters related to timing,
+protocols, and buffers. For each test it reports the bandwidth, loss, and
+other parameters.
+
+%package -n %{develname}
+Summary:  Development files for %{name}
+Group:    Development/C
+Requires: %{libname} = %{version}-%{release}
+Provides: %{name}-devel = %{version}-%{release}
+
+%description -n %{develname}
+This package contains libraries and header files for
+developing applications that use %{name}.
 
 %prep
-%setup -q
-%patch0 -p0
+%autosetup
 
 %build
-%configure2_5x
-%make
+%configure --disable-static
+%make_build
 
 %install
-rm -rf %{buildroot}
-%makeinstall_std
-
-%clean
-rm -rf %{buildroot}
+%make_install
 
 %files
-%defattr(-,root,root)
-%doc README
-%doc doc/*
-%{_bindir}/iperf
-%{_mandir}/man1/*
+%doc README.md
+%license LICENSE
+%{_bindir}/%{name}3
+%{_mandir}/man1/%{name}*
 
+%files -n %{libname}
+%{_libdir}/lib%{name}.so.%{major}{,.*}
 
-%changelog
-* Wed Apr 27 2011 Leonardo Coelho <leonardoc@mandriva.com> 2.0.5-1mdv2011.0
-+ Revision: 659687
-- new package and patch version
-
-* Mon Dec 06 2010 Oden Eriksson <oeriksson@mandriva.com> 2.0.4-3mdv2011.0
-+ Revision: 612403
-- the mass rebuild of 2010.1 packages
-
-* Fri Feb 19 2010 Funda Wang <fwang@mandriva.org> 2.0.4-2mdv2010.1
-+ Revision: 508445
-- fix str fmt
-
-  + Thierry Vignaud <tv@mandriva.org>
-    - rebuild
-
-* Sun Jul 27 2008 Tomasz Pawel Gajc <tpg@mandriva.org> 2.0.4-1mdv2009.0
-+ Revision: 250471
-- update to new version 2.0.4
-- use macros
-- fix mixture of tabs and spaces
-- update file list
-- spec file clean
-
-* Thu Jul 24 2008 Thierry Vignaud <tv@mandriva.org> 2.0.2-3mdv2009.0
-+ Revision: 247248
-- rebuild
-
-  + Olivier Blin <oblin@mandriva.com>
-    - restore BuildRoot
-
-* Mon Dec 17 2007 Thierry Vignaud <tv@mandriva.org> 2.0.2-1mdv2008.1
-+ Revision: 127095
-- kill re-definition of %%buildroot on Pixel's request
-- import iperf
-
-
-* Fri Dec 16 2005 Erwan Velu <erwan@seanodes.com> 2.0.2-1mdk
-- 2.0.2
-
-* Tue Jun 29 2004 Thierry Vignaud <tvignaud@mandrakesoft.com> 1.7.0-2mdk
-- rebuild for new g++
-
-* Thu Apr 28 2004 Bruno Cornec <bruno@HyPer-Linux.org> 1.7.0-1mdk
-- first packaged
+%files -n %{develname}
+%{_includedir}/%{name}_api.h
+%{_libdir}/lib%{name}.so
+%{_mandir}/man3/lib%{name}*
