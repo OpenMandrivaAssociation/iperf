@@ -1,10 +1,11 @@
 %define major     0
-%define libname   %mklibname iperf %major
+%define libname   %mklibname iperf
+%define oldlibname %mklibname iperf 0
 %define develname %mklibname iperf -d
 
 Name:    iperf
 Version: 3.17.1
-Release: 1
+Release: 2
 License: BSD
 Group:   Networking/Other
 Summary: A TCP, UDP, and SCTP network bandwidth measurement tool
@@ -13,6 +14,7 @@ Source:  https://github.com/esnet/%{name}/archive/%{version}.tar.gz
 
 BuildRequires: pkgconfig(libcrypto)
 BuildRequires: pkgconfig(libssl)
+BuildSystem: autotools
 
 %description
 iperf is a tool for active measurements of the maximum achievable bandwidth
@@ -24,6 +26,7 @@ other parameters.
 Group:    System/Libraries
 Summary:  Libraries for %{name}
 Requires: %{name} >= %{version}-%{release}
+%rename %{oldlibname}
 
 %description -n %{libname}
 iperf is a tool for active measurements of the maximum achievable bandwidth
@@ -40,16 +43,6 @@ Provides: %{name}-devel = %{version}-%{release}
 %description -n %{develname}
 This package contains libraries and header files for
 developing applications that use %{name}.
-
-%prep
-%autosetup
-
-%build
-%configure --disable-static
-%make_build
-
-%install
-%make_install
 
 %files
 %doc README.md
