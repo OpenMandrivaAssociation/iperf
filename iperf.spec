@@ -4,8 +4,8 @@
 %define develname %mklibname iperf -d
 
 Name:    iperf
-Version: 3.17.1
-Release: 2
+Version: 3.18
+Release: 1
 License: BSD
 Group:   Networking/Other
 Summary: A TCP, UDP, and SCTP network bandwidth measurement tool
