@@ -4,7 +4,7 @@
 %define develname %mklibname iperf -d
 
 Name:    iperf
-Version: 3.18
+Version: 3.19
 Release: 1
 License: BSD
 Group:   Networking/Other
