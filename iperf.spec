@@ -5,7 +5,7 @@
 
 Name:    iperf
 Version: 3.20
-Release: 1
+Release: 2
 License: BSD
 Group:   Networking/Other
 Summary: A TCP, UDP, and SCTP network bandwidth measurement tool
